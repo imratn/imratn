@@ -164,11 +164,22 @@ def rotation_di(sol):
     sol.append('Di')
 
 
+def center_only_clockwise(sol):
+    global cube_up, cube_down, cube_left, cube_right
+
+    lc, uc, rc, dc = cube_left.copy(), cube_up.copy(), cube_right.copy(), cube_down.copy()
+    cube_left[1], cube_left[4], cube_left[7] = dc[3:6]
+    cube_up[3:6] = lc[7], lc[4], lc[1]
+    cube_right[1], cube_right[4], cube_right[7] = uc[3:6]
+    cube_down[3:6] = rc[7], rc[4], rc[1]
+
+    sol.append('C')
+
+
 def up_only_clockwise():
     """Rotate upper face only clockwise."""
     global cube_up
     uc = cube_up.copy()
-
     cube_up[0], cube_up[1], cube_up[2] = uc[6], uc[3], uc[0]
     cube_up[3], cube_up[4], cube_up[5] = uc[7], uc[4], uc[1]
     cube_up[6], cube_up[7], cube_up[8] = uc[8], uc[5], uc[2]
@@ -285,39 +296,24 @@ def edge_check(up, down, left, right, face, back, c_dict, edges):
             sys.exit(f"Edge pieces {' and '.join(invalid_edges)} are not valid edge pieces in a 3*3 cube.")
 
 
-def color_map(face_colors, round_no):
+def color_map(face_colors):
     """Identify face color and orient as needed.
        Default orientation when Yellow and White are up or down"""
     global cube_up, cube_face, cube_right, cube_left, cube_down, cube_back
 
     for c in face_colors:
-        if round_no is True:
-            if c[4] == 'Y':
-                cube_up = c
-            elif c[4] == 'R':
-                cube_face = c
-            elif c[4] == 'B':
-                cube_left = c
-            elif c[4] == 'G':
-                cube_right = c
-            elif c[4] == 'W':
-                cube_down = c
-            elif c[4] == 'O':
-                cube_back = c
-
-        elif round_no is False:
-            if c[4] == 'W':
-                cube_up = c
-            elif c[4] == 'R':
-                cube_face = c
-            elif c[4] == 'G':
-                cube_left = c
-            elif c[4] == 'B':
-                cube_right = c
-            elif c[4] == 'Y':
-                cube_down = c
-            elif c[4] == 'O':
-                cube_back = c
+        if c[4] == 'W':
+            cube_up = c
+        elif c[4] == 'R':
+            cube_face = c
+        elif c[4] == 'G':
+            cube_left = c
+        elif c[4] == 'B':
+            cube_right = c
+        elif c[4] == 'Y':
+            cube_down = c
+        elif c[4] == 'O':
+            cube_back = c
 
 
 def other_states(up, face, sol, right='') -> None:
@@ -384,7 +380,16 @@ def other_states(up, face, sol, right='') -> None:
 
     # Turn the cube such that the yellow face is up and the white is down
     elif up == 'Y' and right == 'G' and face == 'R':
-        pass
+        other_states('W', 'O', sol)
+        rotation_fi(sol)
+        rotation_fi(sol)
+        other_states('W', 'R', sol, 'G')
+        rotation_f(sol)
+        rotation_f(sol)
+        center_only_clockwise(sol)
+        center_only_clockwise(sol)
+
+        sol.append(['Make Yellow the top face and Red the front face.'])
 
 
 def color_entry(c_dict) -> list[list[str]]:
@@ -1206,6 +1211,32 @@ def edge_flip(sol):
     rotation_u(sol)
 
 
+def edge_to_left_mid(sol):
+    """Swap edge piece on upper layer with one on middle layer.
+    The middle layer edge piece is shared between the front face and the left face."""
+    rotation_ui(sol)
+    rotation_li(sol)
+    rotation_u(sol)
+    rotation_l(sol)
+    rotation_u(sol)
+    rotation_f(sol)
+    rotation_ui(sol)
+    rotation_fi(sol)
+
+
+def edge_to_right_mid(sol):
+    """Swap edge piece on upper layer with one on middle layer.
+    The middle layer edge piece is shared between the front and the right face."""
+    rotation_u(sol)
+    rotation_r(sol)
+    rotation_ui(sol)
+    rotation_ri(sol)
+    rotation_ui(sol)
+    rotation_fi(sol)
+    rotation_u(sol)
+    rotation_f(sol)
+
+
 def make_white_cross(edges, sol):
     """Create a white cross at the top face(white)."""
     global cube_up
@@ -1265,25 +1296,22 @@ edge_positions = defaults['edge pieces']
 cube_up, cube_face, cube_right, cube_left, cube_down, cube_back = [], [], [], [], [], []
 cube_faces = color_entry(color_signage)
 
-# Check if upper face(White) is done then set round_01 to True (make the yellow face the upper face)
-if ['W'] * 9 in cube_faces:
-    round_01 = True
-    color_map(cube_faces, round_01)
 
-    # Verify edge and corner pieces
-    edge_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, edge_pieces)
-    corner_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, corner_pieces.values())
-else:
-    round_01 = False  # Work with the lower face(white) first
-    color_map(cube_faces, round_01)  # map user-entered data to correct cube faces
+color_map(cube_faces)  # map user-entered data to correct cube faces
+edge_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, edge_pieces)
+corner_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, corner_pieces.values())
 
-    # Verify edge and corner pieces
-    edge_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, edge_pieces)
-    corner_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, corner_pieces.values())
-
-    make_white_cross(edge_positions, solution)
-    white_cross(white_up_face_diffs, solution)
-    corner_solving(corner_pieces, solution)
+for num in range(2):
+    if cube_up == ['W'] * 9:
+        other_states('Y', 'R', solution, 'G')
+        # Solve the second layer
+        break
+    else:
+        # Verify edge and corner pieces
+        if cube_up[1] != 'W' or cube_up[3] != 'W' or cube_up[5] != 'W' or cube_up[7] != 'W':
+            make_white_cross(edge_positions, solution)
+        white_cross(white_up_face_diffs, solution)
+        corner_solving(corner_pieces, solution)
 
 
 print(f"Solution {solution}\n")
