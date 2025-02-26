@@ -389,8 +389,10 @@ def other_states(up, face, sol, right='') -> None:
 
 def color_entry(c_dict) -> list[list[str]]:
     """Receives and validates user input."""
-    print('COLOR ENTRY INSTRUCTIONS\n\n1. Start face color entry with the red center piece on the front face\n'
-          '2. Enter the colors starting from the top left corner of each face\n')
+    print('COLOR ENTRY INSTRUCTIONS\n\n'
+          '1. Start face color entry with the red center piece on the front face and white center piece in the top face'
+          '\n2. Enter the yellow face while the red center piece is on the top face. \n'
+          '3. Enter the colors starting from the top left corner of each face and end at the bottom right corner-\n')
 
     faces = []
     face_len = 1
@@ -459,10 +461,19 @@ def side_fc_diffs(sf_diff, sol) -> tuple[list, list]:
             return diff, two_matches
         else:
             return diff, two_matches
-    # Make a white cross to proceed.
-    else:
-        # get the edge pieces missing the white tile
-        pass
+
+
+def get_edge_pc() -> dict:
+    """Gets the edge pieces
+    and returns them as a dictionary"""
+    global cube_up, cube_down, cube_face, cube_back, cube_right, cube_left
+
+    ed_psn = {1: {cube_up[1], cube_back[1]}, 2: {cube_up[3], cube_left[1]}, 3: {cube_up[5], cube_right[1]},
+              4: {cube_up[7], cube_face[1]}, 5: {cube_face[3], cube_left[5]}, 6: {cube_face[5], cube_right[3]},
+              7: {cube_back[5], cube_left[3]}, 8: {cube_back[3], cube_right[5]}, 9: {cube_face[7], cube_down[1]},
+              10: {cube_left[7], cube_down[3]}, 11: {cube_right[7], cube_down[5]}, 12: {cube_back[7], cube_down[7]}}
+
+    return ed_psn
 
 
 def get_corner_pc() -> tuple:
@@ -497,6 +508,363 @@ def corner_move(top, face, right, sol) -> None:
             continue
 
 
+def edge_solving(edges, sol):
+    """Correctly solve the edge pieces
+    Does the necessary rotations to ensure the edges are well-placed therefore completing the white cross."""
+    global cube_up, cube_down, cube_face, cube_back, cube_right, cube_left
+    ep = get_edge_pc()
+    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+
+    layer01_k = [1, 2, 3, 4]
+
+    # Work out every edge piece of the white layer
+    while True:
+        for k, v in edges.items():
+            if e1 == v and k in layer01_k:
+                if k == 2:
+                    other_states('W', 'G', sol)
+                    swap_adj_edges(sol)
+                    other_states('W', 'R', sol, 'R')
+                    ep = get_edge_pc()
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    other_states('W', 'O', sol)
+                    swap_adj_edges(sol)
+                    other_states('W', 'R', sol, 'G')
+                    ep = get_edge_pc()
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    other_states('W', 'O', sol)
+                    rotation_fi(sol)
+                    rotation_ui(sol)
+                    rotation_li(sol)
+                    rotation_u(sol)
+                    other_states('W', 'R', sol, 'G')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e2 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'G', sol)
+                    swap_adj_edges(sol)
+                    other_states('W', 'R', sol, 'R')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_l(sol)
+                    rotation_u(sol)
+                    rotation_u(sol)
+                    rotation_li(sol)
+                    rotation_ui(sol)
+                    rotation_ui(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    swap_adj_edges(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e3 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'O', sol)
+                    swap_adj_edges(sol)
+                    other_states('W', 'R', sol, 'G')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_ri(sol)
+                    rotation_ui(sol)
+                    rotation_ui(sol)
+                    rotation_r(sol)
+                    rotation_u(sol)
+                    rotation_u(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    other_states('W', 'B', sol)
+                    swap_adj_edges(sol)
+                    other_states('W', 'R', sol, 'O')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e4 == v and k in layer01_k:
+                if k == 1:
+                    rotation_f(sol)
+                    rotation_u(sol)
+                    rotation_r(sol)
+                    rotation_ui(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    swap_adj_edges(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    other_states('W', 'B', sol)
+                    swap_adj_edges(sol)
+                    other_states('W', 'R', sol, 'O')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e5 == v and k in layer01_k:
+                if k == 1:
+                    rotation_ui(sol)
+                    rotation_li(sol)
+                    rotation_u(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_li(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_u(sol)
+                    rotation_f(sol)
+                    rotation_ui(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_f(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e6 == v and k in layer01_k:
+                if k == 1:
+                    rotation_u(sol)
+                    rotation_r(sol)
+                    rotation_ui(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_ui(sol)
+                    rotation_fi(sol)
+                    rotation_u(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_r(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_fi(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e7 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'O', sol)
+                    rotation_fi(sol)
+                    other_states('W', 'R', sol, 'G')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_l(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_u(sol)
+                    rotation_u(sol)
+                    rotation_l(sol)
+                    rotation_ui(sol)
+                    rotation_ui(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_u(sol)
+                    rotation_l(sol)
+                    rotation_ui(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e8 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'O', sol)
+                    rotation_f(sol)
+                    other_states('W', 'R', sol, 'G')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_ui(sol)
+                    rotation_ui(sol)
+                    rotation_ri(sol)
+                    rotation_u(sol)
+                    rotation_u(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_ri(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_ui(sol)
+                    rotation_ri(sol)
+                    rotation_u(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e9 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'O', sol)
+                    rotation_di(sol)
+                    rotation_di(sol)
+                    rotation_fi(sol)
+                    rotation_fi(sol)
+                    other_states('W', 'R', sol, 'G')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_di(sol)
+                    rotation_li(sol)
+                    rotation_li(sol)
+                    rotation_li(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_d(sol)
+                    rotation_r(sol)
+                    rotation_r(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_f(sol)
+                    rotation_f(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e10 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'O', sol)
+                    rotation_di(sol)
+                    rotation_fi(sol)
+                    rotation_fi(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_li(sol)
+                    rotation_li(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_d(sol)
+                    rotation_d(sol)
+                    rotation_r(sol)
+                    rotation_r(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_d(sol)
+                    rotation_f(sol)
+                    rotation_f(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e11 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'O', sol)
+                    rotation_d(sol)
+                    rotation_f(sol)
+                    rotation_f(sol)
+                    other_states('W', 'R', sol, 'G')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_di(sol)
+                    rotation_di(sol)
+                    rotation_li(sol)
+                    rotation_li(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_r(sol)
+                    rotation_r(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_di(sol)
+                    rotation_f(sol)
+                    rotation_f(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+            elif e12 == v and k in layer01_k:
+                if k == 1:
+                    other_states('W', 'O', sol)
+                    rotation_f(sol)
+                    rotation_f(sol)
+                    other_states('W', 'R', sol, 'G')
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 2:
+                    rotation_d(sol)
+                    rotation_li(sol)
+                    rotation_li(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 3:
+                    rotation_di(sol)
+                    rotation_r(sol)
+                    rotation_r(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+                elif k == 4:
+                    rotation_di(sol)
+                    rotation_di(sol)
+                    rotation_f(sol)
+                    rotation_f(sol)
+                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
+                                                                         ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
+                    break
+
+        if cube_face[4] == 'G':
+            other_states('W', 'R', sol, 'R')
+        elif cube_face[4] == 'B':
+            other_states('W', 'R', sol, 'O')
+        elif cube_face[4] == 'O':
+            other_states('W', 'R', sol, 'G')
+
+        ep = get_edge_pc()
+        e1, e2, e3, e4 = ep[1], ep[2], ep[3], ep[4]
+        if e1 == edges[1] and e2 == edges[2] and e3 == edges[3] and e4 == edges[4]:
+            break
+        else:
+            continue
+
+
 def corner_solving(corners, sol):
     """Correctly solve the corner pieces.
     Does the necessary rotations to ensure the corners are well-placed therefore completing a layer(white)."""
@@ -505,10 +873,7 @@ def corner_solving(corners, sol):
     c1, c2, c3, c4, c5, c6, c7, c8 = cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]
     layer01_k = [1, 2, 3, 4]
 
-    cOne = ['W', 'G', 'O']
-    cTwo = ['W', 'B', 'O']
-    cThree = ['W', 'G', 'R']
-    cFour = ['W', 'B', 'R']
+    cOne, cTwo, cThree, cFour = ['W', 'G', 'O'], ['W', 'B', 'O'], ['W', 'G', 'R'], ['W', 'B', 'R']
 
     # Work out every corner piece of the white layer.
     while True:
@@ -784,7 +1149,6 @@ def corner_solving(corners, sol):
             continue
 
 
-# Check for white cross in the upper face(White) round_01 == False
 def white_cross(up_fc_diff, sol):
     """
     Rotate faces till edges are on their correct faces.
@@ -823,9 +1187,42 @@ def white_cross(up_fc_diff, sol):
             other_states('W', 'R', sol, 'O')
 
 
-def make_white_cross():
+def edge_flip(sol):
+    """Flips an edge piece"""
+    global cube_up, cube_down, cube_left, cube_right, cube_face, cube_back
+
+    rotation_f(sol)
+    rotation_ui(sol)
+    rotation_r(sol)
+    rotation_u(sol)
+
+
+def make_white_cross(edges, sol):
     """Create a white cross at the top face(white)."""
-    pass
+    global cube_up
+    # Bring white edges to their correct positions
+    edge_solving(edges, sol)
+    # Ensure the white edges are well oriented
+    while True:
+        if cube_up[1] != 'W':
+            other_states('W', 'O', sol)
+            edge_flip(sol)
+            other_states('W', 'R', sol, 'G')
+        elif cube_up[3] != 'W':
+            other_states('W', 'G', sol)
+            edge_flip(sol)
+            other_states('W', 'R', sol, 'R')
+        elif cube_up[5] != 'W':
+            other_states('W', 'B', sol)
+            edge_flip(sol)
+            other_states('W', 'R', sol, 'O')
+        elif cube_up[7] != 'W':
+            edge_flip(sol)
+            
+        if cube_up[1] == 'W' and cube_up[3] == 'W' and cube_up[5] == 'W' and cube_up[7] == 'W':
+            break
+        else:
+            continue
 
 
 # Defines programs default parameters.
@@ -843,8 +1240,8 @@ defaults = {
                            5: {'G', 'O', 'Y'}, 6: {'B', 'O', 'Y'}, 7: {'G', 'R', 'Y'}, 8: {'B', 'R', 'Y'}},
     'corner_ps yellow up': {1: {'B', 'O', 'Y'}, 2: {'G', 'O', 'Y'}, 3: {'B', 'R', 'Y'}, 4: {'G', 'R', 'Y'},
                             5: {'B', 'O', 'W'}, 6: {'G', 'O', 'W'}, 7: {'B', 'R', 'W'}, 8: {'G', 'R', 'W'}},
-    'edge pieces': ({'Y', 'O'}, {'Y', 'B'}, {'Y', 'G'}, {'Y', 'R'}, {'W', 'O'}, {'W', 'B'},
-                    {'W', 'G'}, {'W', 'R'}, {'R', 'B'}, {'R', 'G'}, {'G', 'O'}, {'O', 'B'}),
+    'edge pieces': {12: {'Y', 'O'}, 11: {'Y', 'B'}, 10: {'Y', 'G'}, 9: {'Y', 'R'}, 1: {'W', 'O'}, 3: {'W', 'B'},
+                    2: {'W', 'G'}, 4: {'W', 'R'}, 6: {'R', 'B'}, 5: {'R', 'G'}, 7: {'G', 'O'}, 8: {'O', 'B'}},
             }
 
 solution = []
@@ -852,8 +1249,9 @@ solution = []
 white_up_face_diffs = defaults['hor2 face difference']
 yellow_up_face_diffs = defaults['hor1 face difference']
 color_signage = defaults['color symbols']
-edge_pieces = defaults['edge pieces']
+edge_pieces = defaults['edge pieces'].values()
 corner_pieces = defaults['corner_ps white up']
+edge_positions = defaults['edge pieces']
 
 cube_up, cube_face, cube_right, cube_left, cube_down, cube_back = [], [], [], [], [], []
 cube_faces = color_entry(color_signage)
@@ -874,6 +1272,7 @@ else:
     edge_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, edge_pieces)
     corner_check(cube_up, cube_down, cube_left, cube_right, cube_face, cube_back, color_signage, corner_pieces.values())
 
+    make_white_cross(edge_positions, solution)
     white_cross(white_up_face_diffs, solution)
     corner_solving(corner_pieces, solution)
 
