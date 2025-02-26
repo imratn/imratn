@@ -522,7 +522,9 @@ def edge_solving(edges, sol):
     while True:
         for k, v in edges.items():
             if e1 == v and k in layer01_k:
-                if k == 2:
+                if k == 1:
+                    continue
+                elif k == 2:
                     other_states('W', 'G', sol)
                     swap_adj_edges(sol)
                     other_states('W', 'R', sol, 'R')
@@ -556,6 +558,8 @@ def edge_solving(edges, sol):
                     e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
                                                                          ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
                     break
+                elif k == 2:
+                    continue
                 elif k == 3:
                     rotation_l(sol)
                     rotation_u(sol)
@@ -580,6 +584,7 @@ def edge_solving(edges, sol):
                                                                          ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
                     break
                 elif k == 2:
+                    print('round 1')
                     rotation_ri(sol)
                     rotation_ui(sol)
                     rotation_ui(sol)
@@ -589,6 +594,8 @@ def edge_solving(edges, sol):
                     e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
                                                                          ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
                     break
+                elif k == 3:
+                    continue
                 elif k == 4:
                     other_states('W', 'B', sol)
                     swap_adj_edges(sol)
@@ -617,6 +624,8 @@ def edge_solving(edges, sol):
                     e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12 = (ep[1], ep[2], ep[3], ep[4], ep[5], ep[6],
                                                                          ep[7], ep[8], ep[9], ep[10], ep[11], ep[12])
                     break
+                elif k == 4:
+                    continue
             elif e5 == v and k in layer01_k:
                 if k == 1:
                     rotation_ui(sol)
@@ -1240,8 +1249,8 @@ defaults = {
                            5: {'G', 'O', 'Y'}, 6: {'B', 'O', 'Y'}, 7: {'G', 'R', 'Y'}, 8: {'B', 'R', 'Y'}},
     'corner_ps yellow up': {1: {'B', 'O', 'Y'}, 2: {'G', 'O', 'Y'}, 3: {'B', 'R', 'Y'}, 4: {'G', 'R', 'Y'},
                             5: {'B', 'O', 'W'}, 6: {'G', 'O', 'W'}, 7: {'B', 'R', 'W'}, 8: {'G', 'R', 'W'}},
-    'edge pieces': {12: {'Y', 'O'}, 11: {'Y', 'B'}, 10: {'Y', 'G'}, 9: {'Y', 'R'}, 1: {'W', 'O'}, 3: {'W', 'B'},
-                    2: {'W', 'G'}, 4: {'W', 'R'}, 6: {'R', 'B'}, 5: {'R', 'G'}, 7: {'G', 'O'}, 8: {'O', 'B'}},
+    'edge pieces': {1: {'W', 'O'}, 2: {'W', 'G'}, 3: {'W', 'B'}, 4: {'W', 'R'}, 5: {'R', 'G'}, 6: {'R', 'B'},
+                    7: {'G', 'O'}, 8: {'O', 'B'}, 9: {'Y', 'R'}, 10: {'Y', 'G'}, 11: {'Y', 'B'}, 12: {'Y', 'O'}},
             }
 
 solution = []
