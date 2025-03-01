@@ -1765,7 +1765,6 @@ def symbol_meaning(symbol):
 def results(sol):
     """Shows the steps to solve the cube."""
 
-    steps = 0
     step = 1
     moves = [i for i in sol if type(i) is str]
 
@@ -1773,25 +1772,20 @@ def results(sol):
     print(start_stat.center(len(start_stat) + 10), '-')
     for n in range(len(sol)):
         if sol[n] == ['<<< ALL DONE🎉>>>']:
-            if proceed():
-                print(f"\n<<<{sol[-1]}>>>\n")
-                step += 1
-                break
+            print(f"\n{sol[-1][0]}\n")
+            break
         elif sol[n] != ['<<< ALL DONE🎉>>>'] and type(sol[n]) is list and type(sol[n + 1]) is list:
             del sol[n]
             if type(sol[n + 1]) is list:
                 continue
             else:
                 if proceed():
-                    print(f" \nStep {step} <<<{sol[n][0]}>>> \n")
-                    step += 1
+                    print(f"\n<<<{sol[n][0]}>>> \n")
         elif sol[n] != ['<<< ALL DONE🎉>>>'] and type(sol[n]) is list and type(sol[n + 1]) is not list:
             if proceed():
-                print(f'\nStep {step} <<<{sol[n][0]}>>> \n')
-                step += 1
+                print(f'\n<<<{sol[n][0]}>>> \n')
         else:
             if proceed():
-                steps += 1
                 print(f"\nStep {step} <<<{symbol_meaning(sol[n])}>>>")
                 step += 1
 
