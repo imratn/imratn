@@ -534,24 +534,27 @@ def corner_move(top, face, right, sol, lay='not_last') -> None:
     Algorithm R', D', R, D
     Executes at function corner_solving()"""
     global cube_up, cube_face, cube_right
-    while True:
-        rotation_ri(sol)
-        rotation_di(sol)
-        rotation_r(sol)
-        rotation_d(sol)
+    if lay == 'not_last':
+        while True:
+            rotation_ri(sol)
+            rotation_di(sol)
+            rotation_r(sol)
+            rotation_d(sol)
 
-        if lay == 'not_last':
             if cube_up[8] == top and cube_face[2] == face and cube_right[0] == right:
                 other_states(top, 'R', sol, right)
                 break
             else:
                 continue
-        elif lay == 'last':
-            if cube_up[8] == top:
-                other_states(top, 'R', sol, right)
-                break
-            else:
-                continue
+
+    elif lay == 'last':
+        while cube_up[8] != top:
+            rotation_ri(sol)
+            rotation_di(sol)
+            rotation_r(sol)
+            rotation_d(sol)
+
+        other_states(top, 'R', sol, right)
 
 
 def edge_solving(edges, sol, top='W') -> None:
@@ -850,6 +853,11 @@ def edge_solving(edges, sol, top='W') -> None:
                         swap_adj_edges(sol)
                         other_states('Y', 'R', sol, 'B')
                         break
+                    elif k == 4:
+                        other_states('Y', 'O', sol)
+                        swap_adj_edges(sol)
+                        other_states('Y', 'R', sol, 'B')
+                        break
                 elif e2 == v and k in layer01_k:
                     if k == 1:
                         other_states('Y', 'B', sol)
@@ -858,6 +866,11 @@ def edge_solving(edges, sol, top='W') -> None:
                         break
                     elif k == 2:
                         continue
+                    elif k == 3:
+                        other_states('Y', 'B', sol)
+                        swap_adj_edges(sol)
+                        other_states('Y', 'R', sol, 'R')
+                        break
                     elif k == 4:
                         swap_adj_edges(sol)
                         break
@@ -867,6 +880,11 @@ def edge_solving(edges, sol, top='W') -> None:
                         swap_adj_edges(sol)
                         other_states('Y', 'R', sol, 'B')
                         break
+                    elif k == 2:
+                        other_states('Y', 'G', sol)
+                        swap_adj_edges(sol)
+                        other_states('Y', 'R', sol, 'O')
+                        break
                     elif k == 3:
                         continue
                     elif k == 4:
@@ -875,7 +893,10 @@ def edge_solving(edges, sol, top='W') -> None:
                         other_states('Y', 'R', sol, 'O')
                         break
                 elif e4 == v and k in layer01_k:
-                    if k == 2:
+                    if k == 1:
+                        swap_adj_edges(sol)
+                        break
+                    elif k == 2:
                         swap_adj_edges(sol)
                         break
                     elif k == 3:
@@ -1423,24 +1444,37 @@ def solve_mid_layer(edges, sol):
         else:
             continue
 
-    if cube_face[3] == 'B' and cube_left[5] == 'R':
+    if ((cube_face[3] == 'B' and cube_left[5] == 'R') or (cube_face[3] == 'R' and cube_left[5] == 'G')
+            or (cube_face[3] == 'G' and cube_left[5] == 'R') or (cube_face[3] == 'G' and cube_left[5] == 'O')
+            or (cube_face[3] == 'O' and cube_left[5] == 'G') or (cube_face[3] == 'B' and cube_left[5] == 'O')
+            or (cube_face[3] == 'O' and cube_left[5] == 'B')):
         edge_to_left_mid(sol)
         solve_mid_layer(edges, sol)
-    elif cube_face[5] == 'G' and cube_right[3] == 'R':
+
+    elif ((cube_face[5] == 'G' and cube_right[3] == 'R') or (cube_face[5] == 'G' and cube_right[3] == 'O')
+          or (cube_face[5] == 'O' and cube_right[3] == 'G') or (cube_face[5] == 'B' and cube_right[3] == 'R')
+          or (cube_face[5] == 'R' and cube_right[3] == 'B') or (cube_face[5] == 'B' and cube_right[3] == 'O')
+          or (cube_face[5] == 'O' and cube_right[3] == 'B')):
         edge_to_right_mid(sol)
         solve_mid_layer(edges, sol)
-    elif cube_left[3] == 'O' and cube_back[5] == 'B':
+
+    elif ((cube_left[3] == 'O' and cube_back[5] == 'B') or (cube_left[3] == 'G' and cube_back[5] == 'R')
+          or (cube_left[3] == 'R' and cube_back[5] == 'G') or (cube_left[3] == 'O' and cube_back[5] == 'G')
+          or (cube_left[3] == 'G' and cube_back[5] == 'O') or (cube_left[3] == 'R' and cube_back[5] == 'B')
+          or (cube_left[3] == 'B' and cube_back[5] == 'R')):
         other_states('Y', 'B', sol)
         edge_to_left_mid(sol)
         other_states('Y', 'R', sol, right='R')
         solve_mid_layer(edges, sol)
-    elif cube_right[5] == 'O' and cube_back[3] == 'G':
+
+    elif ((cube_right[5] == 'O' and cube_back[3] == 'G') or (cube_right[5] == 'R' and cube_back[3] == 'B')
+          or (cube_right[5] == 'B' and cube_back[3] == 'R') or (cube_right[5] == 'O' and cube_back[3] == 'B')
+          or (cube_right[5] == 'B' and cube_back[3] == 'O') or (cube_right[5] == 'R' and cube_back[3] == 'G')
+          or (cube_right[5] == 'G' and cube_back[3] == 'R')):
         other_states('Y', 'G', sol)
         edge_to_right_mid(sol)
         other_states('Y', 'R', sol, right='O')
         solve_mid_layer(edges, sol)
-    else:
-        return
 
 
 def arrange_upper_corners(sol):
@@ -1462,44 +1496,55 @@ def solve_final_layer(edges, corners, sol):
     round_no = 1
 
     # Make Yellow cross on top face:
-    while True:
-        # Check for a 3 consecutive Yellow tiles.
-        if [cube_up[1], cube_up[4], cube_up[7]] == ['Y'] * 3:
-            rotation_u(sol)
-        if [cube_up[3], cube_up[4], cube_up[5]] == ['Y'] * 3:
-            # Algorithm F, R, U ,Ri, Ui, Fi
-            rotation_f(sol)
-            rotation_r(sol)
-            rotation_u(sol)
-            rotation_ri(sol)
-            rotation_ui(sol)
-            rotation_fi(sol)
-            break
-        # Check for Yellow tiles forming an inverted L shape.
-        elif [cube_up[1], cube_up[3], cube_up[4]] == ['Y'] * 3:
-            # Algorithm F, U, R, Ui, Ri, Fi
-            rotation_f(sol)
-            rotation_u(sol)
-            rotation_r(sol)
-            rotation_ui(sol)
-            rotation_ri(sol)
-            rotation_fi(sol)
-            break
-        else:
-            if round_no == 1:
-                other_states('Y', 'B', sol)
-                round_no += 1
-                continue
-            elif round_no == 2:
-                other_states('Y', 'R', sol, 'R')
-                other_states('Y', 'G', sol)
-                round_no += 1
-                continue
-            elif round_no == 3:
-                other_states('Y', 'R', sol, 'O')
-                other_states('Y', 'O', sol)
-                round_no += 1
-                continue
+    if [cube_up[1], cube_up[3], cube_up[4], cube_up[5], cube_up[7]] != ['Y'] * 5:
+        while True:
+            # Check for a 3 consecutive Yellow tiles.
+            if [cube_up[1], cube_up[4], cube_up[7]] == ['Y'] * 3:
+                rotation_u(sol)
+            if [cube_up[3], cube_up[4], cube_up[5]] == ['Y'] * 3:
+                # Algorithm F, R, U ,Ri, Ui, Fi
+                rotation_f(sol)
+                rotation_r(sol)
+                rotation_u(sol)
+                rotation_ri(sol)
+                rotation_ui(sol)
+                rotation_fi(sol)
+                break
+            # Check for Yellow tiles forming an inverted L shape.
+            elif [cube_up[1], cube_up[3], cube_up[4]] == ['Y'] * 3:
+                # Algorithm F, U, R, Ui, Ri, Fi
+                rotation_f(sol)
+                rotation_u(sol)
+                rotation_r(sol)
+                rotation_ui(sol)
+                rotation_ri(sol)
+                rotation_fi(sol)
+                break
+            else:
+                if round_no == 1:
+                    other_states('Y', 'B', sol)
+                    round_no += 1
+                    continue
+                elif round_no == 2:
+                    other_states('Y', 'R', sol, 'R')
+                    other_states('Y', 'G', sol)
+                    round_no += 1
+                    continue
+                elif round_no == 3:
+                    other_states('Y', 'R', sol, 'O')
+                    other_states('Y', 'O', sol)
+                    round_no += 1
+                    continue
+                elif round_no > 3:
+                    other_states('Y', 'R', sol, 'B')
+                    rotation_f(sol)
+                    rotation_u(sol)
+                    rotation_r(sol)
+                    rotation_ui(sol)
+                    rotation_ri(sol)
+                    rotation_fi(sol)
+                    round_no = 0
+                    continue
 
     if cube_face[4] == 'G':
         other_states('Y', 'R', sol, 'O')
@@ -1527,8 +1572,22 @@ def solve_final_layer(edges, corners, sol):
                 other_states('Y', 'B', sol)
                 arrange_upper_corners(sol)
                 other_states('Y', 'R', sol, 'R')
+            elif k == 3:
+                arrange_upper_corners(sol)
+                arrange_upper_corners(sol)
+            elif k == 4:
+                other_states('Y', 'G', sol)
+                arrange_upper_corners(sol)
+                other_states('Y', 'R', sol, 'O')
         elif cp2 == v:
-            if k == 3:
+            if k == 1:
+                other_states('Y', 'O', sol)
+                arrange_upper_corners(sol)
+                other_states('Y', 'R', sol, 'B')
+                other_states('Y', 'B', sol)
+                arrange_upper_corners(sol)
+                other_states('Y', 'R', sol, 'R')
+            elif k == 3:
                 arrange_upper_corners(sol)
                 other_states('Y', 'B', sol)
                 cp3 = get_corner_pc()[3]
@@ -1560,6 +1619,11 @@ def solve_final_layer(edges, corners, sol):
                     arrange_upper_corners(sol)
                     cp3 = get_corner_pc()[3]
                 other_states('Y', 'R', sol, 'B')
+            elif k == 2:
+                arrange_upper_corners(sol)
+                other_states('Y', 'B', sol)
+                arrange_upper_corners(sol)
+                other_states('Y', 'R', sol, 'R')
             elif k == 3:
                 other_states('Y', 'B', sol)
                 cp3 = get_corner_pc()[3]
@@ -1567,6 +1631,11 @@ def solve_final_layer(edges, corners, sol):
                     arrange_upper_corners(sol)
                     cp3 = get_corner_pc()[3]
                 other_states('Y', 'R', sol, 'R')
+            elif k == 4:
+                arrange_upper_corners(sol)
+                other_states('Y', 'G', sol)
+                arrange_upper_corners(sol)
+                other_states('Y', 'R', sol, 'O')
         elif cp4 == v:
             if k == 1:
                 other_states('Y', 'B', sol)
@@ -1578,6 +1647,13 @@ def solve_final_layer(edges, corners, sol):
                     arrange_upper_corners(sol)
                     cp3 = get_corner_pc()[3]
                 other_states('Y', 'R', sol, 'B')
+            elif k == 2:
+                other_states('Y', 'G', sol)
+                arrange_upper_corners(sol)
+                other_states('Y', 'R', sol, 'O')
+                other_states('Y', 'O', sol)
+                arrange_upper_corners(sol)
+                other_states('Y', 'R', sol, 'B')
             elif k == 3:
                 other_states('Y', 'G', sol)
                 arrange_upper_corners(sol)
@@ -1588,6 +1664,11 @@ def solve_final_layer(edges, corners, sol):
                     arrange_upper_corners(sol)
                     cp3 = get_corner_pc()[3]
                 other_states('Y', 'R', sol, 'R')
+            elif k == 4:
+                cp3 = get_corner_pc()[3]
+                while cp3 != {'Y', 'B', 'R'}:
+                    arrange_upper_corners(sol)
+                    cp3 = get_corner_pc()[3]
 
     if cube_face[4] == 'G':
         other_states('Y', 'R', sol, 'O')
@@ -1596,9 +1677,18 @@ def solve_final_layer(edges, corners, sol):
     elif cube_face[4] == 'O':
         other_states('Y', 'R', sol, 'B')
 
-    for n in range(4):
+    while True:
         corner_move('Y', 'R', 'G', sol, 'last')
-        rotation_u(sol)
+        if cube_up[0] == cube_up[2] == 'Y' and cube_up[6] != 'Y':
+            rotation_ui(sol)
+        else:
+            rotation_u(sol)
+
+        if cube_face == ['R'] * 9 and cube_left == ['B'] * 9 and cube_right == ['G'] * 9 and cube_back == ['O'] * 9:
+            sol.append(['<<< ALL DONE🎉>>>'])
+            break
+        else:
+            continue
 
 
 def make_white_cross(edges, sol):
@@ -1627,6 +1717,83 @@ def make_white_cross(edges, sol):
             break
         else:
             continue
+
+
+def proceed():
+    """Allows the user to move to the next step."""
+    trials = 0
+    while True:
+        decision = str(input("\nENTER 1 to proceed: ")).upper().strip()
+        if decision == '1':
+            return True
+        elif trials == 5:
+            sys.exit("You have exceeded the max trials allowed. Please follow the instructions given.")
+        else:
+            print("Please type Next or 1 to proceed.")
+            trials += 1
+            continue
+
+
+def symbol_meaning(symbol):
+    """Provides descriptive info on items in solution list."""
+
+    to_do = ''
+    if symbol == 'Ui':
+        to_do = "Rotate the UP face ANTICLOCKWISE."
+    elif symbol == 'U':
+        to_do = "Rotate the UP face CLOCKWISE."
+    elif symbol == 'R':
+        to_do = "Rotate the RIGHT face CLOCKWISE."
+    elif symbol == 'Ri':
+        to_do = "Rotate the RIGHT face ANTICLOCKWISE."
+    elif symbol == 'Di':
+        to_do = "Rotate the DOWN face ANTICLOCKWISE."
+    elif symbol == 'D':
+        to_do = "Rotate the DOWN face CLOCKWISE."
+    elif symbol == 'L':
+        to_do = "Rotate the LEFT face CLOCKWISE."
+    elif symbol == 'Li':
+        to_do = "Rotate the LEFT face ANTICLOCKWISE."
+    elif symbol == 'F':
+        to_do = "Rotate the FRONT face CLOCKWISE."
+    elif symbol == 'Fi':
+        to_do = "Rotate the FRONT face ANTICLOCKWISE."
+
+    return to_do
+
+
+def results(sol):
+    """Shows the steps to solve the cube."""
+
+    steps = 0
+    step = 1
+    moves = [i for i in sol if type(i) is str]
+
+    start_stat = f"\nYou'll be able to solve the cube in {len(moves)} steps if you follow the steps keenly.\n"
+    print(start_stat.center(len(start_stat) + 10), '-')
+    for n in range(len(sol)):
+        if sol[n] == ['<<< ALL DONE🎉>>>']:
+            if proceed():
+                print(f"\n<<<{sol[-1]}>>>\n")
+                step += 1
+                break
+        elif sol[n] != ['<<< ALL DONE🎉>>>'] and type(sol[n]) is list and type(sol[n + 1]) is list:
+            del sol[n]
+            if type(sol[n + 1]) is list:
+                continue
+            else:
+                if proceed():
+                    print(f" \nStep {step} <<<{sol[n][0]}>>> \n")
+                    step += 1
+        elif sol[n] != ['<<< ALL DONE🎉>>>'] and type(sol[n]) is list and type(sol[n + 1]) is not list:
+            if proceed():
+                print(f'\nStep {step} <<<{sol[n][0]}>>> \n')
+                step += 1
+        else:
+            if proceed():
+                steps += 1
+                print(f"\nStep {step} <<<{symbol_meaning(sol[n])}>>>")
+                step += 1
 
 
 # Defines programs default parameters.
@@ -1669,15 +1836,7 @@ for num in range(2):
         # Solve the second layer
         solve_mid_layer(edge_positions2, solution)
         solve_final_layer(edge_positions2, yellow_corner_pieces, solution)
-
-        print(f'\nUP {cube_up}')
-        print(f'FACE {cube_face}')
-        print(f'RIGHT {cube_right}')
-        print(f'LEFT {cube_left}')
-        print(f'DOWN {cube_down}')
-        print(f'BACK {cube_back}\n')
-
-        print(f"Solution {solution}\n")
+        results(solution)
         break
     else:
         # Verify edge and corner pieces
