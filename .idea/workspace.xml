@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5d94282e-c06a-40be-b40b-59d2f5a043d9" name="Changes" comment="Finale🎉🎉🎉">
+      <change afterPath="$PROJECT_DIR$/../../$RECYCLE.BIN/S-1-5-21-774720261-2692054372-744395136-1001/$R77HE23/.idea/object_oriented_programming.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../.idea/E.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Dev/.idea/Dev.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Dev/products/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/Applications/AlienInvasion/.idea/AlienInvasion.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/Web applications practice/temp_db_practice_01/.idea/temporary_db_practice.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/Web applications practice/temp_db_practice_02/.idea/db_practice02.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/Web applications practice/temp_db_practice_03/.idea/temp_db_practice_03.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/Web applications practice/temp_db_practice_04/.idea/temp_db_practice_04.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/predict numbers/.idea/predict numbers.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/.idea/python lessons.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/Lesson_8/.idea/Lesson_8.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/lesson 10/.idea/lesson 10.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/lesson 11(read &amp; write)/.idea/lesson 11(read &amp; write).iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/lesson 12_more_on_files/.idea/lesson 12_more_on_files.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/lesson 13(OOP)/.idea/lesson 13(OOP).iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/lesson 9/.idea/lesson 9.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Learn Python/python lessons/projects/.idea/projects.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../algorithms/.idea/algorithms.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/custom_practice.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../freecodeCamp/.idea/freecodeCamp.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user_interface/.idea/user_interface.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/Third yr/Sem 1/Assignments/Group/BQS301 Computing 2/get value_labels/.idea/get value_labels.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/.idea/custom_practice.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/custom_practice/.idea/custom_practice.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/custom_practice/freecodeCamp/.idea/freecodeCamp.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/custom_practice/user_interface/.idea/user_interface.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/.idea/python lessons.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/Lesson_8/.idea/Lesson_8.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/lesson 10/.idea/lesson 10.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/lesson 11(read &amp; write)/.idea/lesson 11(read &amp; write).iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/lesson 12_more_on_files/.idea/lesson 12_more_on_files.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/lesson 13(OOP)/.idea/lesson 13(OOP).iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/lesson 9/.idea/lesson 9.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../imratn 32/pythonFiles/python lessons/projects/.idea/projects.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../library_web/.idea/library_web.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../websites_automate/.idea/websites_automate.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rubiks01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rubiks01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../time_calculate.py" beforeDir="false" afterPath="$PROJECT_DIR$/../time_calculate.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2sziCt1IbL86RtreBvpWyQD2uGE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.elv_license.executor": "Run",
+    "Python.library_system(advanced).executor": "Run",
+    "Python.rubiks_cube01.executor": "Run",
+    "Python.scratch_14.executor": "Run",
+    "Python.scratch_2.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "E:/custom_practice/rubiks01",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "vcs.Git"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "directory"
+    ],
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Python"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\custom_practice" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-337b0a7a993a-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.19416.19" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5d94282e-c06a-40be-b40b-59d2f5a043d9" name="Changes" comment="" />
+      <created>1739464681150</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739464681150</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Can solve layer 1 if the white cross is already formed">
+      <option name="closed" value="true" />
+      <created>1740406887614</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740406887614</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Solve completely the white layer">
+      <option name="closed" value="true" />
+      <created>1740579790363</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740579790363</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Handle edge cases to allow the white layer to be solved completely no matter the cube state.">
+      <option name="closed" value="true" />
+      <created>1740592653938</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740592653938</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Start solving the middle layer">
+      <option name="closed" value="true" />
+      <created>1740598949210</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740598949210</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Completely solve the first and second layer">
+      <option name="closed" value="true" />
+      <created>1740652498153</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740652498153</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Completely solve the entire rubiks cube. Hurray🥳🥳🎉">
+      <option name="closed" value="true" />
+      <created>1740679375728</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740679375728</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Code refactor to cover all edge cases and Provide a formatted output for the user.">
+      <option name="closed" value="true" />
+      <created>1740846410063</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1740846410063</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Finale🎉🎉🎉">
+      <option name="closed" value="true" />
+      <created>1740847970316</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1740847970316</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Finale🎉🎉🎉">
+      <option name="closed" value="true" />
+      <created>1740896545797</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1740896545797</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Can solve layer 1 if the white cross is already formed" />
+    <MESSAGE value="Solve completely the white layer" />
+    <MESSAGE value="Handle edge cases to allow the white layer to be solved completely no matter the cube state." />
+    <MESSAGE value="Start solving the middle layer" />
+    <MESSAGE value="Completely solve the first and second layer" />
+    <MESSAGE value="Completely solve the entire rubiks cube. Hurray" />
+    <MESSAGE value="Code refactor to cover all edge cases and Provide a formatted output for the user." />
+    <MESSAGE value="Finale" />
+    <MESSAGE value="Finale" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finale" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rubiks_cube01.py</url>
+          <line>1291</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rubiks_cube01.py</url>
+          <line>252</line>
+          <option name="timeStamp" value="180" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Rubiks_cube_OOP_LayerByLayer/rubiks_cube.py</url>
+          <line>341</line>
+          <option name="timeStamp" value="181" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Rubiks_cube_OOP_LayerByLayer/rubiks_cube.py</url>
+          <line>1270</line>
+          <option name="timeStamp" value="182" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rubiks_cube01.py</url>
+          <line>1450</line>
+          <option name="timeStamp" value="184" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
