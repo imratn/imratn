@@ -21,7 +21,7 @@ def rotation_ui(sol):
     """Rotate the upper face anticlockwise."""
     global cube_face, cube_left, cube_back, cube_right, cube_up
 
-    fc, lc, bc, rc, uc = cube_face.copy(), cube_left.copy(), cube_back.copy(), cube_right.copy(), cube_up.copy()
+    fc, lc, bc, rc = cube_face.copy(), cube_left.copy(), cube_back.copy(), cube_right.copy()
     cube_face[:3] = lc[:3]
     cube_left[:3] = bc[:3]
     cube_back[:3] = rc[:3]
@@ -448,59 +448,6 @@ def color_entry(c_dict) -> list[list[str]]:
             print(f'Each face contains 9 colored tiles. Re-enter Face {face_len} colors.\n')
 
     return faces
-
-
-def side_fc_diffs(sf_diff, sol) -> tuple[list, list]:
-    """Get face difference and the number of rotations required to an edge to its correct face."""
-
-    global cube_up, cube_back, cube_left, cube_right, cube_face
-    # Provide face difference to match the edge piece to it's corresponding face.
-    if cube_up[1] == cube_up[3] == cube_up[5] == cube_up[7] == 'W':  # white cross
-        matches = []
-        side_fcs = [cube_back, cube_left, cube_face, cube_right]
-
-        # Get color and its current face and the required position.
-        for n in range(len(side_fcs)):
-            face_dict = {'W': cube_up, 'Y': cube_down, 'G': cube_left, 'B': cube_right, 'R': cube_face, 'O': cube_back}
-            matches += [[side_fcs[n][1], side_fcs[n][4], k] for k, v in face_dict.items() if side_fcs[n][1] == v[4]]
-
-        # Get face difference (2 = 180 and 1/-1 = 90) in a list
-        diff = [lis[1] + lis[2] for lis in matches]
-
-        two_matches = []
-        for k, v in sf_diff.items():
-            # When no edge matches to it's face but requires only a face rotation to match them
-            if diff[0] in v and diff[1] in v and diff[2] in v and diff[3] in v:
-                if k == 1:
-                    rotation_u(sol)
-                    break
-                elif k == -1:
-                    rotation_ui(sol)
-                    break
-                elif k == 2:
-                    rotation_u(sol)
-                    rotation_u(sol)
-                    break
-
-            else:
-                for i in diff:
-                    if i in v:
-                        two_matches.append(k)
-
-        while cube_face[1] != 'R':
-            rotation_u(sol)
-            result = side_fc_diffs(sf_diff, sol)
-            diff = result[0]
-            two_matches = result[1]
-
-        if two_matches == [2, 2]:
-            swap_adj_edges(sol)
-            result2 = side_fc_diffs(sf_diff, sol)
-            diff = result2[0]
-            two_matches = result2[1]
-            return diff, two_matches
-        else:
-            return diff, two_matches
 
 
 def get_edge_pc() -> dict:
@@ -1206,44 +1153,6 @@ def corner_solving(corners, sol) -> None:
             continue
 
 
-def white_cross(up_fc_diff, sol) -> None:
-    """
-    Rotate faces till edges are on their correct faces.
-    """
-    # Rotate up face clockwise to match corresponding face
-    two_matches = side_fc_diffs(up_fc_diff, sol)[1]
-
-    # two adjacent colors matching
-    for i in two_matches:
-        if len(two_matches) > 2:
-            if two_matches.count(i) == 2 and i == 2:
-                rotation_u(sol)
-                rotation_u(sol)
-                break
-            elif two_matches.count(i) == 2 and i == 1:
-                rotation_u(sol)
-                break
-            elif two_matches.count(i) == 2 and i == -1:
-                rotation_ui(sol)
-                break
-
-    diff = side_fc_diffs(up_fc_diff, sol)[0]
-    center_piece = ''
-    for i in diff:
-        if i in up_fc_diff[1]:
-            center_piece = i[0]
-
-    if center_piece:
-        other_states('W', center_piece, sol)
-        swap_adj_edges(sol)
-        if center_piece == 'G':
-            other_states('W', 'R', sol, 'R')
-        elif center_piece == 'O':
-            other_states('W', 'R', sol, 'G')
-        elif center_piece == 'B':
-            other_states('W', 'R', sol, 'O')
-
-
 def edge_flip(sol) -> None:
     """Flips an edge piece"""
     global cube_up, cube_down, cube_left, cube_right, cube_face, cube_back
@@ -1791,11 +1700,8 @@ def results(sol):
 
 
 # Defines programs default parameters.
-defaults = {
+DEFAULTS = {
     'color symbols': {'Y': 'Yellow', 'W': 'White', 'B': 'Blue', 'G': 'Green', 'R': 'Red', 'O': 'Orange'},
-    'face difference': {2: ['OR', 'RO', 'GB', 'BG'],
-                        -1: ['RB', 'BO', 'OG', 'GR'],
-                        1: ['BR', 'RG', 'GO', 'OB']},
     'corner_ps white up': {1: {'G', 'O', 'W'}, 2: {'B', 'O', 'W'}, 3: {'G', 'R', 'W'}, 4: {'B', 'R', 'W'},
                            5: {'G', 'O', 'Y'}, 6: {'B', 'O', 'Y'}, 7: {'G', 'R', 'Y'}, 8: {'B', 'R', 'Y'}},
     'corner_ps yellow up': {1: {'B', 'O', 'Y'}, 2: {'G', 'O', 'Y'}, 3: {'B', 'R', 'Y'}, 4: {'G', 'R', 'Y'},
@@ -1810,32 +1716,28 @@ defaults = {
 
 solution = []
 
-white_up_face_diffs = defaults['face difference']
-color_signage = defaults['color symbols']
-white_corner_pieces = defaults['corner_ps white up']
-yellow_corner_pieces = defaults['corner_ps yellow up']
-edge_positions = defaults['edge pieces white up']
-edge_positions2 = defaults['edge pieces yellow up']
+COLOR_SIGNAGE = DEFAULTS['color symbols']
+WHITE_CORNER_PCS = DEFAULTS['corner_ps white up']
+YELLOW_CORNER_PCS = DEFAULTS['corner_ps yellow up']
+EDGE_POSITIONS = DEFAULTS['edge pieces white up']
+EDGE_POSITIONS2 = DEFAULTS['edge pieces yellow up']
 
 cube_up, cube_face, cube_right, cube_left, cube_down, cube_back = [], [], [], [], [], []
-cube_faces = color_entry(color_signage)
+cube_faces = color_entry(COLOR_SIGNAGE)
 
 color_map(cube_faces)  # map user-entered data to correct cube faces
-edge_check(color_signage, edge_positions.values())
-corner_check(color_signage, white_corner_pieces.values())
+edge_check(COLOR_SIGNAGE, EDGE_POSITIONS.values())
+corner_check(COLOR_SIGNAGE, WHITE_CORNER_PCS.values())
 
 for num in range(2):
     if cube_up == ['W'] * 9:
         other_states('Y', 'R', solution, 'G', 1)
         # Solve the second layer
-        solve_mid_layer(edge_positions2, solution)
-        solve_final_layer(edge_positions2, yellow_corner_pieces, solution)
+        solve_mid_layer(EDGE_POSITIONS2, solution)
+        solve_final_layer(EDGE_POSITIONS2, YELLOW_CORNER_PCS, solution)
         results(solution)
         break
     else:
         # Verify edge and corner pieces
-        if cube_up[1] != 'W' or cube_up[3] != 'W' or cube_up[5] != 'W' or cube_up[7] != 'W':
-            make_white_cross(edge_positions, solution)
-
-        white_cross(white_up_face_diffs, solution)
-        corner_solving(white_corner_pieces, solution)
+        make_white_cross(EDGE_POSITIONS, solution)
+        corner_solving(WHITE_CORNER_PCS, solution)
