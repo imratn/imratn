@@ -1730,7 +1730,8 @@ edge_check(COLOR_SIGNAGE, EDGE_POSITIONS.values())
 corner_check(COLOR_SIGNAGE, WHITE_CORNER_PCS.values())
 
 for num in range(2):
-    if cube_up == ['W'] * 9:
+    if (cube_up == ['W'] * 9 and cube_back[1] == 'O' and cube_left[1] == 'G' and cube_face[1] == 'R' and
+            cube_right[1] == 'B'):
         other_states('Y', 'R', solution, 'G', 1)
         # Solve the second layer
         solve_mid_layer(EDGE_POSITIONS2, solution)
@@ -1738,6 +1739,19 @@ for num in range(2):
         results(solution)
         break
     else:
-        # Verify edge and corner pieces
-        make_white_cross(EDGE_POSITIONS, solution)
-        corner_solving(WHITE_CORNER_PCS, solution)
+        if cube_up == ['W'] * 9:
+            if (cube_face[:3] == ['O'] * 3 and cube_left[:3] == ['B'] * 3 and cube_right[:3] == ['G'] * 3 and
+                    cube_back[:3] == ['R'] * 3):
+                rotation_u(solution)
+                rotation_u(solution)
+            elif (cube_face[:3] == ['B'] * 3 and cube_left[:3] == ['R'] * 3 and cube_right[:3] == ['O'] * 3 and
+                  cube_back[:3] == ['G'] * 3):
+                rotation_ui(solution)
+            elif (cube_face[:3] == ['G'] * 3 and cube_left[:3] == ['O'] * 3 and cube_right[:3] == ['R'] * 3 and
+                  cube_back[:3] == ['B'] * 3):
+                rotation_u(solution)
+        else:
+            # Verify edge and corner pieces
+            make_white_cross(EDGE_POSITIONS, solution)
+            corner_solving(WHITE_CORNER_PCS, solution)
+
