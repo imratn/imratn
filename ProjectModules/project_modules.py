@@ -455,6 +455,13 @@ class Cube:
                         round_no = 0
                         continue
 
+        if self.cube_face[4] == 'G':
+            self.other_states('Y', 'R', 'O')
+        elif self.cube_face[4] == 'B':
+            self.other_states('Y', 'R', 'R')
+        elif self.cube_face[4] == 'O':
+            self.other_states('Y', 'R', 'B')
+
         # Ensure each edge piece is at its correct position
         self.edge_solving(self.edge_pcs_yellow_up, 'Y')
         # Ensure each corner is at its correct position
@@ -975,6 +982,13 @@ class Cube:
                             break
                         elif k == 4:
                             continue
+
+                if self.cube_face[4] == 'G':
+                    self.other_states('Y', 'R', 'O')
+                elif self.cube_face[4] == 'B':
+                    self.other_states('Y', 'R', 'R')
+                elif self.cube_face[4] == 'O':
+                    self.other_states('Y', 'R', 'B')
 
                 ep = self.get_edge_pc()
                 e1, e2, e3, e4 = ep[1], ep[2], ep[3], ep[4]
@@ -1731,3 +1745,7 @@ class Cube:
                 self.cube_down = c
             elif c[4] == 'O':
                 self.cube_back = c
+
+
+if __name__ == '__main__':
+    print('good')
