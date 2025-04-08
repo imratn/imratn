@@ -29,7 +29,6 @@ def main(c_dict, epwu, cpwu, cpyu, epyu):
                 edge_pcs_yellow_up=epyu,
                 corner_pcs_yellow_up=cpyu,
                 corner_pcs_white_up=cpwu)
-    print('PAST HERE ')
     cube.color_map()
     cube.edge_check()
     cube.corner_check()
