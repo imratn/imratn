@@ -1690,8 +1690,7 @@ class Cube:
         face_len = 1
         attempts = 0
         faces = []
-        # while face_len <= 6:
-        while face_len > 6:
+        while face_len <= 6:
             if attempts == 6:
                 sys.exit('Please ensure you enter the correct colors as indicated in the instructions.')
             face_input = list(input(f'Face {face_len}: ').upper().strip())
@@ -1706,9 +1705,6 @@ class Cube:
             else:
                 print(f'\nA face has 9 colors. {attempts} attempts left.\n')
                 attempts += 1
-
-        faces = [list('oywbwyywy'.upper()), list('grbwrbbog'.upper()), list('rrryboyog'.upper()),
-                 list('ogogybgyw'.upper()), list('bowwogogw'.upper()), list('brrrgbrwy'.upper())]
 
         return faces
 
