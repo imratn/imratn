@@ -1741,7 +1741,3 @@ class Cube:
                 self.cube_down = c
             elif c[4] == 'O':
                 self.cube_back = c
-
-
-if __name__ == '__main__':
-    print('good')

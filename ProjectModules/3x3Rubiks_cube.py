@@ -1,7 +1,7 @@
 import sys
 from project_modules import Cube
 
-# Defines programs default parameters.
+# Program default parameters.
 DEFAULTS = {
     'color symbols': {'Y': 'Yellow', 'W': 'White', 'B': 'Blue', 'G': 'Green', 'R': 'Red', 'O': 'Orange'},
     'corner_ps white up': {1: {'G', 'O', 'W'}, 2: {'B', 'O', 'W'}, 3: {'G', 'R', 'W'}, 4: {'B', 'R', 'W'},
